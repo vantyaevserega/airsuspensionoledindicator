@@ -49,6 +49,7 @@ void setup() {
   values[1].pin = A1;
   values[2].pin = A2;
   values[3].pin = A3;
+  Serial.println("Started. Used pins: A0 - A3");
 }
 
 void loop() {
@@ -62,6 +63,10 @@ void loop() {
       {
         values[i].current = active;
         values[i].prevTime = nowT;
+        Serial.print("Pin A");
+        Serial.print(i);
+        Serial.print(" changed state to ");        
+        Serial.println(active ? "true" : "false");        
       }
     }
   }
