@@ -83,6 +83,7 @@ void loop() {
     oled.clear();   // очистить дисплей (или буфер)
     oled.update();  // обновить. Только для режима с буфером! OLED_BUFFER
 
+    // рисование
     switch(stateImage)
     {
       case 0:
