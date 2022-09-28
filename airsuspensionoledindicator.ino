@@ -6,6 +6,8 @@ struct state
   int pin;
 };
 
+bool isBuffered = false;
+
 state values[4];
 GyverOLED<SSH1106_128x64> oled;
 byte currentImage = 4;
@@ -43,7 +45,11 @@ void setup() {
   Serial.begin(9600);
   oled.init();  // инициализация
   oled.clear();   // очистить дисплей (или буфер)
-  oled.update();  // обновить. Только для режима с буфером! OLED_BUFFER
+
+  if(isBuffered)
+  {
+    oled.update();
+  }
 
   values[0].pin = A0;
   values[1].pin = A1;
@@ -80,8 +86,7 @@ void loop() {
 
   if(currentImage != stateImage)
   {
-    oled.clear();   // очистить дисплей (или буфер)
-    oled.update();  // обновить. Только для режима с буфером! OLED_BUFFER
+    oled.clear();
 
     // рисование
     switch(stateImage)
@@ -98,6 +103,11 @@ void loop() {
       case 3:
         oled.drawBitmap(48, 16, bitmap_4, 32, 32, BITMAP_NORMAL, BUF_ADD);
         break;
+    }
+
+    if(isBuffered)
+    {
+      oled.update();
     }
 
     if(stateImage < 4)
