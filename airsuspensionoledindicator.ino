@@ -50,6 +50,8 @@ void setup() {
   values[2].pin = A2;
   values[3].pin = A3;
   Serial.println("Started. Used pins: A0 - A3");
+
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
@@ -95,6 +97,15 @@ void loop() {
       case 3:
         oled.drawBitmap(48, 16, bitmap_4, 32, 32, BITMAP_NORMAL, BUF_ADD);
         break;
+    }
+
+    if(stateImage < 4)
+    {
+      digitalWrite(LED_BUILTIN, HIGH);
+    }
+    else
+    {
+      digitalWrite(LED_BUILTIN, LOW);
     }
 
     currentImage = stateImage;
