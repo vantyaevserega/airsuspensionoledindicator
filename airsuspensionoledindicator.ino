@@ -120,5 +120,6 @@ void loop() {
     }
 
     currentImage = stateImage;
+    Serial.println("Redrawed");    
   }
 }
