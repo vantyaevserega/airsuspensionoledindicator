@@ -83,23 +83,23 @@ void setup() {
     oled.update();
   }
 
-  values[0].pin = 2;
+  values[0].pin = A0;
   values[0].bitmap = bitmap_1;
 
-  values[1].pin = 3;
+  values[1].pin = A1;
   values[1].bitmap = bitmap_2;
 
-  values[2].pin = 4;  
+  values[2].pin = A2;  
   values[2].bitmap = bitmap_3;
 
-  values[3].pin = 5;
+  values[3].pin = A3;
   values[3].bitmap = bitmap_4;
 
-  values[4].pin = 6;
+  values[4].pin = A6;
   values[4].bitmap = bitmap_5; 
 
   // добавить 2 строки как выше с указанием пина и изображения
-  // values[5].pin = 7;
+  // values[5].pin = A7;
   // values[5].bitmap = bitmap_6;  
 
   for(int i = 0; i < COUNT_CH; ++i)
@@ -116,7 +116,7 @@ void loop() {
   {    
     if(nowT - values[i].prevTime >= readDelay)
     {  
-      bool active = digitalRead(values[i].pin);
+      bool active = analogRead(values[i].pin) * 5.0 / 1024.0 > 2.5;
       if(active != values[i].current)
       {
         values[i].current = active;
