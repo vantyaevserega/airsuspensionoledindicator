@@ -1,6 +1,6 @@
 #include <GyverOLED.h>
 
-#define COUNT_CH 5 // добавить при необходимости. 5 заменить на 6, 7 и тд
+#define COUNT_CH 4
 
 struct state
 {    
@@ -12,7 +12,7 @@ struct state
 
 bool isBuffered = false;
 
-state values[COUNT_CH];
+state values[COUNT_CH + 1];
 GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
 byte currentImage = COUNT_CH;
 byte readDelay = 100;
@@ -95,7 +95,7 @@ void setup() {
   values[3].pin = A3;
   values[3].bitmap = bitmap_4;
 
-  values[4].pin = A6;
+  // убран, всегда активен, если нет другого values[4].pin = A6;
   values[4].bitmap = bitmap_5; 
 
   // добавить 2 строки как выше с указанием пина и изображения
@@ -116,7 +116,7 @@ void loop() {
   {    
     if(nowT - values[i].prevTime >= readDelay)
     {  
-      bool active = analogRead(values[i].pin) * 5.0 / 1024.0 > 2.5;
+      bool active = analogRead(values[i].pin) * 5.0 / 1024.0 > 1.2;
       if(active != values[i].current)
       {
         values[i].current = active;
@@ -139,7 +139,7 @@ void loop() {
   {
     oled.clear();
 
-    if(stateImage < COUNT_CH)
+    if(stateImage <= COUNT_CH)
     {
       oled.drawBitmap(0, 0, values[stateImage].bitmap, 128, 64, BITMAP_NORMAL, BUF_ADD);
     }
