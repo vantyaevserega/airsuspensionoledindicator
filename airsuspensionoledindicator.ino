@@ -1,6 +1,8 @@
 #include <GyverOLED.h>
 
 #define COUNT_CH 4
+#define d1106
+//#define d1306
 
 struct state
 {    
@@ -10,10 +12,18 @@ struct state
   uint8_t* bitmap;
 };
 
-bool isBuffered = false;
-
 state values[COUNT_CH + 1];
+
+#ifdef d1106
+bool isBuffered = true;
+GyverOLED<SSH1106_128x64> oled;
+#else
+#ifdef d1306
+bool isBuffered = false;
 GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
+#endif
+#endif
+
 byte currentImage = COUNT_CH;
 byte readDelay = 100;
 
